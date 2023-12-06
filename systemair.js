@@ -1,16 +1,16 @@
 // var express = require("express");
 const http = require("http");
 const mqtt = require('mqtt');
-const config = require('./smartair-config');
+const config = require('./systemair-config');
 
 const client = mqtt.connect(config.mqttUrl, config.mqttOptions)
-const deviceHost = config.smartairIamHost
-const deviceName = config.smartAirDeviceName
+const deviceHost = config.systemairIamHostIamHost
+const deviceName = config.systemairDeviceName
 
 const mqttSensorTopic = `homeassistant/sensor/${deviceName}`
 const mqttNumberTopic = `homeassistant/number/${deviceName}`
 const mqttSelectTopic = `homeassistant/select/${deviceName}`
-const mqttAvailabilityTopic = `smartair/bridge/state`
+const mqttAvailabilityTopic = `systemair/bridge/state`
 
 const mqttStateTopic = `${mqttSensorTopic}/state`
 const mqttNumberStateTopic = `${mqttNumberTopic}/state`
@@ -149,8 +149,8 @@ const publishEntityStatus = (registers, status) => {
   client.publish(mqttAvailabilityTopic, JSON.stringify(registerStatus));
 }
 
-const registerDevicesMqtt = (smartAirRegisters, numberEntities, selectRegisters) => {
-  smartAirRegisters.forEach(register => {
+const registerDevicesMqtt = (systemairRegisters, numberEntities, selectRegisters) => {
+  systemairRegisters.forEach(register => {
     const entityConfigTopic = `${mqttSensorTopic}/${register.name.replace(/ /g,"_")}/config`
     const entity = registerToEntity(register)
     log(`[${entityConfigTopic}] registering entity: ${JSON.stringify(entity)}`)

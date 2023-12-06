@@ -1,5 +1,5 @@
-# smartair-mqtt
-utility to for polling smartairs "hub" and publishing it to mqtt in a format home assistant understands. It polls the IAM every 60 seconds, and if it detects a change, it publishes that result to mqtt.
+# systemair-mqtt
+utility to for polling systemtairs "hub" and publishing it to mqtt in a format home assistant understands. It polls the IAM every 60 seconds, and if it detects a change, it publishes that result to mqtt.
 
 # Compability
 Tested against a VTR-100 with the Internet access module (IAM). Might work against other models, or it might just break them.
@@ -19,12 +19,12 @@ To run it I would recommend using a public known
 # How to
 You'll need a mqtt broker, a user to the broker, and a running installation of home assistant. 
 
-Check out the project, copy and rename the `smartair-config-example.js` file to `smartair-config.js` and fill in the blanks.
+Check out the project, copy and rename the `systemair-config-example.js` file to `systemair-config.js` and fill in the blanks.
 
 Then you can run it with:
 
-`npm install && node smartair.js`
+`npm install && node systemair.js`
 
 There is almost no error handling, so I'm currently running it with:
 
-`while true; node smartair.js; sleep 10; end`
+`while true; node systemair.js; sleep 10; end`
