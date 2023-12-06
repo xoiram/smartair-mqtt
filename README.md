@@ -17,7 +17,11 @@ Node 18 with npm. Might work on other versions, but who knows.
 To run it I would recommend using a public known
 
 # How to
-You'll need a mqtt broker, and a running installation of home assistant. Then you can check out the project and run it with:
+You'll need a mqtt broker, a user to the broker, and a running installation of home assistant. 
+
+Check out the project, copy and rename the `smartair-config-example.js` file to `smartair-config.js` and fill in the blanks.
+
+Then you can run it with:
 
 `npm install && node smartair.js`
 
