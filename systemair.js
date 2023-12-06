@@ -4,7 +4,7 @@ const mqtt = require('mqtt');
 const config = require('./systemair-config');
 
 const client = mqtt.connect(config.mqttUrl, config.mqttOptions)
-const deviceHost = config.systemairIamHostIamHost
+const deviceHost = config.systemairIamHost
 const deviceName = config.systemairDeviceName
 
 const mqttSensorTopic = `homeassistant/sensor/${deviceName}`
@@ -128,6 +128,7 @@ const registerToEntity = (register) => {
 }
 
 const readRegisters = (registers, stateTopic) => {
+  log(`attempting to read ${registers.length} and publish results to ${stateTopic}`)
   const encodedRegisters = `{${registers.map((reg) => `"${reg.register}":1`).join(",")}}`
   http
     .request({ host: deviceHost, path: `/mread?${encodedRegisters}` }, (response) => { 
@@ -153,7 +154,7 @@ const registerDevicesMqtt = (systemairRegisters, numberEntities, selectRegisters
   systemairRegisters.forEach(register => {
     const entityConfigTopic = `${mqttSensorTopic}/${register.name.replace(/ /g,"_")}/config`
     const entity = registerToEntity(register)
-    log(`[${entityConfigTopic}] registering entity: ${JSON.stringify(entity)}`)
+    log(`[${entityConfigTopic}] registering entity: ${entity.name}`)
     client.publish(entityConfigTopic, JSON.stringify(entity));
     //client.publish(`${mqttSensorTopic}/config`, '');
   });
@@ -161,7 +162,7 @@ const registerDevicesMqtt = (systemairRegisters, numberEntities, selectRegisters
   numberEntities.forEach(register => {
     const entityNumberConfigTopic = `${mqttNumberTopic}/${register.name.replace(/ /g,"_")}/config`
     const numberEntity = configRegisterToNumberEntity(register)
-    log(`[${entityNumberConfigTopic}] registering config entity: ${JSON.stringify(numberEntity)}`)
+    log(`[${entityNumberConfigTopic}] registering config entity: ${numberEntity.name}`)
     client.publish(entityNumberConfigTopic, JSON.stringify(numberEntity));
     // client.publish(entityNumberConfigTopic, '');
   });
@@ -169,7 +170,7 @@ const registerDevicesMqtt = (systemairRegisters, numberEntities, selectRegisters
   selectRegisters.forEach(register => {
     const selectConfigTopic = `${mqttSelectTopic}/${register.name.replace(/ /g,"_")}/config`
     const selectEntity = selectRegisterToEntity(register)
-    log(`[${selectConfigTopic}] registering select entity: ${JSON.stringify(selectEntity)}`)
+    log(`[${selectConfigTopic}] registering select entity: ${selectEntity}`)
     client.publish(selectConfigTopic, JSON.stringify(selectEntity));
     // client.publish(entityNumberConfigTopic, '');
   });
@@ -248,9 +249,9 @@ const updateDevice = (register, rawValue, registers) => {
 const subscribeToHomeAssistantUpdates = () => {
   client.subscribe(`homeassistant/status`, (err) => {
     if (err) {
-      console.log("unable to subscribe to HA updates")
+      log("unable to subscribe to HA updates")
     } else {
-      console.log("subscribing to HA status updates")
+      log("subscribed to HA status updates")
     }
   })
 
@@ -286,9 +287,9 @@ server.listen(4006, () => {
     setupSelectSubscriptions(selectRegisters);
 
     subscribeToHomeAssistantUpdates()
-
-    setInterval(updateRegisters, 60000);
   });
+
+  setInterval(updateRegisters, 60000);
 
   log('Server running on port 4006');
 });
@@ -320,7 +321,6 @@ const handleResponse = function (response, registersToUse, topic) {
     str += chunk;
   });
 
-  //the whole response has been recieved, so we just print it out here
   response.on("end", function () {
     const response = JSON.parse(str);
     const result = {}
