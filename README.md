@@ -1,5 +1,5 @@
 # smartair-mqtt
-utility to for polling smartairs "hub" and publishing it to mqtt in a format home assistant understands
+utility to for polling smartairs "hub" and publishing it to mqtt in a format home assistant understands. It polls the IAM every 60 seconds, and if it detects a change, it publishes that result to mqtt.
 
 # Compability
 Tested against a VTR-100 with the Internet access module (IAM). Might work against other models, or it might just break them.
