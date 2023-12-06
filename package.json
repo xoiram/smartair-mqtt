@@ -1,0 +1,19 @@
+{
+  "name": "nisau-holdings",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nisau.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@formatjs/intl-relativetimeformat": "^9.4.1",
+    "cheerio": "^1.0.0-rc.10",
+    "express": "^4.15.2",
+    "http": "0.0.0",
+    "intl-relativeformat": "^6.4.3",
+    "mqtt": "^5.1.3"
+  }
+}
