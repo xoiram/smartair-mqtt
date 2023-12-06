@@ -217,11 +217,10 @@ const setupConfigSubscriptions = (configRegisters) => {
 };
 
 const updateSelect = (register, valueName, selectRegisters) => {
-  log(`looking for register ${register}`)
   const relevantRegister = selectRegisters.find((p) => p.updateRegister == register)
   const optionChosen = relevantRegister.options.find((o) => o.name == valueName)
   const value = optionChosen.value
-  updateDevice(register, value)
+  updateDevice(register, value, selectRegisters)
 }
 
 const updateDevice = (register, rawValue, registers) => {
@@ -234,7 +233,7 @@ const updateDevice = (register, rawValue, registers) => {
   const value = rawValue * factor
   
   const encodedRequestParam = `{%22${register}%22:${value}}`
-  log(`received update for register ${register}`)
+  log(`received request to update register ${register}`)
   http
     .request({ host: deviceHost, path: `/mwrite?${encodedRequestParam}` }, (response) => {       
       log(`[register: ${register}] updated. new value: ${value}`)
