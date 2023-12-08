@@ -170,7 +170,7 @@ const registerDevicesMqtt = (systemairRegisters, numberEntities, selectRegisters
   selectRegisters.forEach(register => {
     const selectConfigTopic = `${mqttSelectTopic}/${register.name.replace(/ /g,"_")}/config`
     const selectEntity = selectRegisterToEntity(register)
-    log(`[${selectConfigTopic}] registering select entity: ${selectEntity}`)
+    log(`[${selectConfigTopic}] registering select entity: ${selectEntity.name}`)
     client.publish(selectConfigTopic, JSON.stringify(selectEntity));
     // client.publish(entityNumberConfigTopic, '');
   });
