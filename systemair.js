@@ -135,8 +135,9 @@ const readRegisters = (registers, stateTopic) => {
       handleResponse(response, registers, stateTopic) 
       publishEntityStatus(registers, 'online');
     }).on("error", (err) => {
-      log(`received error reading registers: ${err}`)
-      publishEntityStatus(registers, 'offline');
+      log(`received error reading registers: ${err}. exiting...`)
+      publishEntityStatus(registers, 'offline')
+      process.exit(1)
     }).end();
 
 }
