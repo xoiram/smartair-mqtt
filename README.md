@@ -28,3 +28,5 @@ Then you can run it with:
 There is almost no error handling, so I'm currently running it with:
 
 `while true; node systemair.js; sleep 10; end`
+
+There's also a Dockerfile, to use this, a config dir must be mounted containing a file called `systemair-config.js`.

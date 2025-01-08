@@ -1,7 +1,7 @@
 // var express = require("express");
 const http = require("http");
 const mqtt = require('mqtt');
-const config = require('./systemair-config');
+const config = require('/config/systemair-config');
 
 const client = mqtt.connect(config.mqttUrl, config.mqttOptions)
 const deviceHost = config.systemairIamHost
