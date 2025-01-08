@@ -274,7 +274,7 @@ const updateRegisters = () => {
   }, 10000);
 }
 
-server.listen(4006, () => {
+server.listen(3000, () => {
   client.on('connect', function () {
     log('Connected to MQTT. Registering devices.')
     registerDevicesMqtt(registers, configRegisters, selectRegisters);
@@ -291,7 +291,7 @@ server.listen(4006, () => {
 
   setInterval(updateRegisters, 60000);
 
-  log('Server running on port 4006');
+  log('Server running on port 3000');
 });
 
 const readRegister = (relevantReg, register, response) => {
